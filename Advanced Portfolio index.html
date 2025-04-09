@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Shankar Rao</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            display: flex;
+            background-color: #1a1a2e;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .sidebar {
+            width: 270px;
+            height: 100vh;
+            background: linear-gradient(135deg, #0f3460, #16213e);
+            padding: 20px;
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            box-shadow: 3px 0px 10px rgba(0, 0, 0, 0.3);
+            transition: 0.5s ease-in-out;
+        }
+
+        .profile-pic {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 3px solid white;
+            margin-bottom: 10px;
+            transition: transform 0.3s;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.1);
+        }
+
+        .sidebar h2 {
+            font-size: 22px;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #00aaff;
+            animation: fadeIn 1s;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 20px;
+            transition: transform 0.3s;
+        }
+
+        .social-icons a:hover {
+            transform: scale(1.2);
+            color: #00aaff;
+        }
+
+        .menu {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .menu a {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            transition: 0.3s;
+            border-radius: 5px;
+        }
+
+        .menu a:hover {
+            background-color: #00aaff;
+            transform: translateX(5px);
+        }
+
+        .dropdown-menu {
+            display: none;
+            flex-direction: column;
+            padding-left: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .dropdown:hover .dropdown-menu {
+            display: flex;
+        }
+
+        .content {
+            margin-left: 300px;
+            padding: 50px;
+            width: calc(100% - 300px);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: start;
+        }
+
+        .section {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            width: 100%;
+            margin-bottom: 30px;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(0, 0, 0, 0.5));
+            animation: fadeIn 1s;
+        }
+
+        .section.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h1 {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #00aaff;
+            animation: slideIn 0.5s forwards;
+        }
+
+        p {
+            font-size: 18px;
+            animation: fadeIn 1s;
+        }
+
+        /* Education Grid */
+        .education-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .education-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 5px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .education-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 170, 255, 0.5);
+        }
+
+        .education-item h3 {
+            margin-bottom: 10px;
+            font-size: 24px;
+            color: #00aaff;
+        }
+
+        .education-item p {
+            font-size: 16px;
+        }
+
+        .section-title {
+            font-size: 28px;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #00aaff;
+            padding-bottom: 5px;
+            animation: fadeIn 1s;
+        }
+
+        .section-content {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+
+        .section-content:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .icon {
+            font-size: 20px;
+            color: #00aaff;
+            margin-right: 8px;
+        }
+
+        .animated-pic {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+
+        .animated-pic:hover {
+            transform: scale(1.05);
+        }
+        .content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+        }
+
+.section {
+    text-align: center;
+}
+
+h1 {
+    font-size: 50px; 
+}
+
+p {
+    font-size: 22px; 
+}
+.portfolio-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 100%;
+}
+
+.portfolio-item {
+    width: 100%;
+    padding: 30px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    transition: transform 0.3s, box-shadow 0.3s;
+    font-size: 20px; 
+    text-align: justify;
+}
+
+
+.portfolio-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 30px rgba(0, 170, 255, 0.5);
+}
+
+.github-link {
+    color: #00aaff;
+    font-size: 20px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.github-link:hover {
+    text-decoration: underline;
+}
+
+
+.home-text {
+    flex: 1; /* Makes text take up half of the space */
+    text-align: left;
+}
+
+@media (max-width: 768px) {
+    .home-container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .home-text {
+        text-align: center;
+    }
+}
+.home-image {
+    width: 180px; /* Small but visible */
+    height: auto;
+    border-radius: 5px; /* Slightly rounded edges (can be removed) */
+    box-shadow: 0 5px 15px rgba(0, 170, 255, 0.4);
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 3px solid #00aaff; /* Stylish blue border */
+    padding: 5px; /* Space inside the border */
+    background-color: rgba(255, 255, 255, 0.05); /* Light background */
+}
+
+.home-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 20px rgba(0, 170, 255, 0.6);
+}
+
+
+
+
+
+
+        
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <img src="profile.jpg" alt="Profile Picture" class="profile-pic">
+        <h2>Shankar Rao</h2>
+        <div class="social-icons">
+            <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://linkedin.com" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook"></i></a>
+        </div>
+        <div class="menu">
+            <a href="#" onclick="showSection('home')">🏠 Home</a>
+            <a href="#" onclick="showSection('about')">📜 About</a>
+
+            <!-- Resume Dropdown -->
+            <div class="dropdown">
+                <a href="#">📄 Resume ▼</a>
+                <div class="dropdown-menu">
+                    <a href="#" onclick="showSection('education')">📖 Education</a>
+                    <a href="#" onclick="showSection('skills')">🛠 Skills</a>
+                    <a href="#" onclick="showSection('certifications')">📜 Certifications</a>
+                </div>
+            </div>
+
+            <a href="#" onclick="showSection('portfolio')">🖼 Portfolio</a>
+            <a href="#" onclick="showSection('blog')">📝 Blog</a>
+            <a href="#" onclick="showSection('contact')">📞 Contact</a>
+            <a href="#" onclick="showSection('references')">🔗 References</a>
+        </div>
+    </div>
+
+    <!-- Content Section -->
+    <div class="content">
+        <div id="home" class="section active">
+            <div class="home-container">
+                <!-- Left: Profile Picture -->
+                <div class="home-image-container">
+                    <img src="C:\Users\shnka\OneDrive\Pictures\IMG_20250113_002445_256.webp" alt="Profile Picture" class="home-image">
+                </div>
+                
+                <!-- Right: Welcome Text -->
+                <div class="home-text">
+                    <h1>Welcome to My Portfolio</h1>
+                    <p>Hello! I am Shankar Rao, a BCA student and web developer.</p>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div id="about" class="section">
+            <h1>About Me</h1>
+            <p><i class="icon fas fa-user"></i>Hello! I'm Shankar Rao, a BCA student at Vignan University, Guntur, passionate about web development and programming. I have experience in HTML, CSS, Java, and Python, focusing on creating dynamic and responsive applications. I enjoy solving complex problems and continuously learning new technologies. My goal is to build innovative solutions that enhance user experiences.</p>
+            <div class="section-content">
+                <p>I enjoy creating dynamic and responsive web applications. My interests also include exploring new technologies and contributing to open-source projects.</p>
+                <img src="about.jpg" alt="About Me" class="animated-pic">
+            </div>
+        </div>
+
+        <div id="education" class="section">
+            <h1 class="section-title">Education</h1>
+            <div class="education-grid">
+                <div class="education-item">
+                    <h3>10th Grade</h3>
+                    <p><i class="icon fas fa-school"></i>School: Pragna High School </p>
+                    <p>Year: 2020</p>
+                    <p>Grade: A+</p>
+                </div>
+                <div class="education-item">
+                    <h3>Intermediate</h3>
+                    <p><i class="icon fas fa-graduation-cap"></i>College: Pragna Junior College</p>
+                    <p>Year: 2023</p>
+                    <p>Grade: A</p>
+                </div>
+                <div class="education-item">
+                    <h3>BCA</h3>
+                    <p><i class="icon fas fa-university"></i>University: Vignan University, Guntur</p>
+                    <p>Year: 2026</p>
+                    <p>Current Year: 2nd Year</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="skills" class="section">
+            <h1 class="section-title">Skills</h1>
+            <div class="section-content">
+                <p><i class="icon fas fa-code"></i>HTML, CSS, JavaScript</p>
+                <p><i class="icon fas fa-database"></i>MySQL, MongoDB</p>
+                <p><i class="icon fas fa-tools"></i>React, Node.js</p>
+               
+            </div>
+        </div>
+
+        <div id="certifications" class="section">
+            <h1 class="section-title">Certifications</h1>
+            <div class="section-content">
+                <p><i class="icon fas fa-certificate"></i>💡 Python for Data Science – IBM (Cognitive Class)<br>
+                    🔹 Learned data manipulation, visualization, and analysis using Pandas & NumPy.<br>
+                    🔹 Implemented machine learning concepts in Python.</p>
+                <p><i class="icon fas fa-certificate"></i>💡 Cloud Computing with AWS – Google Cloud / AWS Academy<br>
+                    🔹 Covered cloud architecture, computing, and storage services.<br>
+                    🔹 Deployed applications using cloud-based infrastructure.</p>
+               
+            </div>
+        </div>
+
+        <div id="portfolio" class="section">
+            <h1 class="section-title">Portfolio</h1>
+            <div class="portfolio-container">
+                <div class="portfolio-item">
+                    <h3>Department Leave Application</h3>
+                    <p>
+                        <i class="icon fas fa-briefcase"></i> A web application designed to streamline the process of applying for 
+                        leave within a department. It ensures seamless communication between employees and administrators.
+                    </p>
+                    <p>
+                        <a href="https://github.com/yourgithub/department-leave-app" target="_blank" class="github-link">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    </p>
+                </div>
+                <div class="portfolio-item">
+                    <h3>Food Blog</h3>
+                    <p>
+                        <i class="icon fas fa-utensils"></i> A blog featuring mouth-watering recipes, cooking tips, and food 
+                        experiences. Built with a modern UI and interactive features for food enthusiasts.
+                    </p>
+                    <p>
+                        <a href="https://github.com/yourgithub/food-blog" target="_blank" class="github-link">
+                            <i class="fab fa-github"></i> View on GitHub
+                        </a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        
+
+        <div id="blog" class="section">
+            <h1 class="section-title">Blog</h1>
+            <div class="section-content">
+                <p><i class="icon fas fa-pencil-alt"></i>Latest Post: My Journey in Web Development</p>
+                <p> Exploring the World of Web Development 🌍
+                    I love sharing my thoughts on web development, technology trends, and coding experiences. Here are some of my blog posts:
+                    
+                    📌 The Future of Web Development
+                    🔹 Trends in frontend and backend technologies.
+                    🔹 How AI is revolutionizing web development.
+                    
+                    📌 Building Scalable Web Applications
+                    🔹 Best practices for creating performance-driven apps.
+                    🔹 Choosing the right tech stack for scalability.
+                    
+                    📌 My Journey in Coding
+                    🔹 How I started learning HTML, CSS, and JavaScript.
+                    🔹 Challenges I faced and how I overcame them.</p>
+            </div>
+        </div>
+
+        <div id="contact" class="section">
+            <h1 class="section-title">Contact</h1>
+            <div class="section-content">
+                <p><i class="icon fas fa-envelope"></i>Email: shankarrao93918@gmail.com</p>
+                <p><i class="icon fas fa-phone"></i>Phone: 9391865766</p>
+            </div>
+        </div>
+
+        <div id="references" class="section">
+            <h1 class="section-title">References</h1>
+            <div class="section-content">
+                <p> Irfan Sayyad : Counselor for 2nd BCA</p>
+                <p> Irfan Sayyad : Prpject Guide</p>
+                <p><i class="icon fas fa-user-friends"></i>Available upon request.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showSection(sectionId) {
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            document.getElementById(sectionId).classList.add('active');
+        }
+    </script>
+</body>
+</html>
